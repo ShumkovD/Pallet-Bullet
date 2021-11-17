@@ -47,7 +47,7 @@ public class EnemyDeath : MonoBehaviour
             else
             {
                 //çáÇÌÇ»Ç¢
-                if (other.GetComponent<AttackDamage>().bulletColor != ColorTypes.ColorType.Super)
+                if (bulletAttack.bulletColor != ColorTypes.ColorType.Super)
                 {
                     bulletParticle.damageParticle = damageParticles[1];
                     hp -= bulletAttack.damage;

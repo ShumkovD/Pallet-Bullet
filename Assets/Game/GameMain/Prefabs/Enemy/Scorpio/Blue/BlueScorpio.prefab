@@ -1580,7 +1580,7 @@ GameObject:
   - component: {fileID: 986572518996323774}
   - component: {fileID: 5384604304184563653}
   - component: {fileID: -509503055220609385}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BlueScorpio
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1662,7 +1662,7 @@ MonoBehaviour:
   walkingRange: 5
   playerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   player: {fileID: 0}
   isAttacking: 0
 --- !u!114 &986572518996323773

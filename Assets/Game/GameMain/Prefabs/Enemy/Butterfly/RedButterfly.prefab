@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 2622770390097718940}
   - component: {fileID: 4706417278652284328}
   - component: {fileID: 216012838536406950}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RedButterfly
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -626,7 +626,7 @@ MonoBehaviour:
   walkingRange: 6
   playerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   player: {fileID: 0}
   isAttacking: 0
 --- !u!114 &126036081

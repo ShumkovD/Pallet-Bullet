@@ -1288,7 +1288,7 @@ GameObject:
   - component: {fileID: 380408759}
   - component: {fileID: 6276891780398802251}
   - component: {fileID: 2580220056025222553}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RedScorpio
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1370,7 +1370,7 @@ MonoBehaviour:
   walkingRange: 5
   playerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   player: {fileID: 0}
   isAttacking: 0
 --- !u!114 &380408756
