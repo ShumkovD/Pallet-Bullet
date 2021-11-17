@@ -3601,7 +3601,7 @@ GameObject:
   - component: {fileID: 957510038}
   - component: {fileID: 957510037}
   - component: {fileID: 957510036}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5319,7 +5319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 790200934275174497, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 790200934275174497, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_TagString
@@ -5343,7 +5343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1029659714468790649, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1029659714468790649, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_TagString
@@ -5371,7 +5371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2336002190736556295, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2336002190736556295, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_TagString
@@ -5411,7 +5411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3218949305630129694, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3218949305630129694, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_TagString
@@ -5439,7 +5439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000147533494047701, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000147533494047701, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_TagString
@@ -5451,7 +5451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4127193937527152886, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4127193937527152886, guid: 0784cf7e4c320bd42b495633f5b41a0a, type: 3}
       propertyPath: m_TagString
@@ -6909,6 +6909,10 @@ PrefabInstance:
       propertyPath: UITime
       value: 
       objectReference: {fileID: 230858458}
+    - target: {fileID: 1156266530, guid: 6d9f83ca6c8b8cd4186c4abd7b3feece, type: 3}
+      propertyPath: playerThickness
+      value: 0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 1156266530, guid: 6d9f83ca6c8b8cd4186c4abd7b3feece, type: 3}
       propertyPath: groundMask.m_Bits
       value: 64

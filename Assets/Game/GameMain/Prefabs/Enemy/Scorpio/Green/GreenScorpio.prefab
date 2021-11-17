@@ -1087,7 +1087,7 @@ GameObject:
   - component: {fileID: 1656114104668643587}
   - component: {fileID: 8210578108903497724}
   - component: {fileID: -5045470594988834034}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: GreenScorpio
   m_TagString: Enemy
   m_Icon: {fileID: 0}

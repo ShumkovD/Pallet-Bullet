@@ -3831,8 +3831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193ef827021cf63468f129e418d63952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelOption: {fileID: 138264456}
   startButton: {fileID: 1737831387}
+  bgmTitle: {fileID: 0}
   fadeOut: {fileID: 1522699763}
   debug: 0
 --- !u!4 &1482423654

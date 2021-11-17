@@ -32,14 +32,15 @@ public class PlayerJumping : MonoBehaviour
     {
         if (Gamepad.current != null)
             gamepad = Gamepad.current;
+        //地面の確認
+        isGrounded = Physics.CheckSphere(transform.position, playerThickness, groundMask);
         //ジャンプ入力
-        isJumping = gamepad.aButton.wasPressedThisFrame;
+        isJumping = gamepad.aButton.wasPressedThisFrame|| gamepad.aButton.isPressed;
     }
     
     void FixedUpdate()
     {
         //地面についているかどうか確認
-        bool isGrounded = Physics.CheckSphere(transform.position, playerThickness, groundMask);
         if (isGrounded&&isJumping)
         {
             gravity.y = Mathf.Sqrt(-0.5f * gravitationEffect * 3f) * Time.deltaTime;

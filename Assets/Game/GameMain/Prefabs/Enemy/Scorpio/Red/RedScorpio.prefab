@@ -1288,7 +1288,7 @@ GameObject:
   - component: {fileID: 380408759}
   - component: {fileID: 6276891780398802251}
   - component: {fileID: 2580220056025222553}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RedScorpio
   m_TagString: Enemy
   m_Icon: {fileID: 0}

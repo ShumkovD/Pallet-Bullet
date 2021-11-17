@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 2622770390097718940}
   - component: {fileID: 4706417278652284328}
   - component: {fileID: 216012838536406950}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: RedButterfly
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -992,9 +992,8 @@ MonoBehaviour:
   bulletColor: 0
   damage: 10
   isPlayer: 0
-  DistanceToEnemy: 0
-  target: {fileID: 0}
   moveVector: {x: 0, y: 0, z: 0}
+  target: {fileID: 0}
 --- !u!1 &5091491895631855588
 GameObject:
   m_ObjectHideFlags: 0
