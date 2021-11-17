@@ -8,8 +8,6 @@ using System.IO;
 
 public class mainUI : MonoBehaviour
 {
-    //public GameObject panelStart;//スタート画面
-    public GameObject panelOption;//オプション画面
     public Button startButton;
 
     float delta = 0f;
@@ -17,9 +15,8 @@ public class mainUI : MonoBehaviour
     //デモシーンへの移行
     float demoTimer;
 
-    //option画面切り替えの猶予時間
-    bool isOption = false;
-    float changeTime = 0;
+    //BGMの設定
+    public AudioSource bgmTitle;
 
     Gamepad gamepad;
 
@@ -34,53 +31,55 @@ public class mainUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        path = Application.dataPath + "/Settings";
         demoTimer = 0;
-            
+
+        if (File.Exists(path))
+        {
+            volValue = ReadSettings(path);
+            bgmTitle.volume = volValue;
+        }
+
     }
 
-    
+
     // Update is called once per frame
     void Update()
     {
         if (Gamepad.current != null)
             gamepad = Gamepad.current;
         Debug.Log(demoTimer);
-        Option();
 
 
-        //デモシーンへの遷移
-        if (!isOption)//入力がない場合タイマーをカウント
-        {
-            if (Input.anyKey)
-            {
-                demoTimer = 0f;
-            }
-            else
-            {
-                demoTimer += Time.deltaTime;
+        //入力がない場合タイマーをカウント
 
-
-                if (demoTimer > 10.0f)//10秒でシーン移行
-                {
-                    SceneManager.LoadScene(2);
-                }
-            }
-        }
-        else
+        if (Input.anyKey)
         {
             demoTimer = 0f;
         }
+        else
+        {
+            demoTimer += Time.deltaTime;
 
-        if(gamepad.bButton.wasPressedThisFrame)
+
+            if (demoTimer > 10.0f)//10秒でシーン移行
+            {
+                SceneManager.LoadScene(2);
+            }
+        }
+
+        //Bボタンでゲームシーンへ
+        if (gamepad.bButton.wasPressedThisFrame)
         {
             OnButtonDown_Start();
         }
 
-        if(gamepad.startButton.isPressed)
+        //スタートボタン長押しでゲームを閉じる(デバッグ用
+        if (gamepad.startButton.isPressed)
         {
             delta += Time.deltaTime;
 
-            if(delta > 3.0f)
+            if (delta > 3.0f)
             {
                 delta = 0;
                 ApplicationQuit();
@@ -98,37 +97,25 @@ public class mainUI : MonoBehaviour
     {
         fadeOut.SetActive(true);
     }
-    //optionを閉じる
-    public void OnButtonDown_close()
+
+    void WriteSettings(float volumeValue_)
     {
-        panelOption.SetActive(false);
+        if (!File.Exists(path))
+            File.Create(path);
+        string content =
+            "GameVolume= " + volValue.ToString();
+
+        File.WriteAllText(path, content);
     }
 
-    //オプション画面を管理する関数
-    public void Option()
+    float ReadSettings(string path_)
     {
-        // Escキーでオプション画面
-        if (gamepad.bButton.wasPressedThisFrame && !isOption&& debug)
-        {
-            panelOption.SetActive(true);
-            demoTimer = 0;
-            isOption = true;
-        }
-
-        if (isOption)
-        {
-            changeTime += Time.deltaTime;
-
-            if (changeTime > 0.05 && gamepad.bButton.wasPressedThisFrame)
-            {
-                panelOption.SetActive(false);
-                changeTime = 0;
-                demoTimer = 0;
-                isOption = false;
-            }
-        }
+        string text = File.ReadAllText(path_);
+        var settingString = text.Split(" "[0]);
+        float volume = float.Parse(settingString[1]);
+        Debug.Log(volume);
+        return volume;
     }
-
 
     void ApplicationQuit()
     {

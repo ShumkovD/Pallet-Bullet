@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class demoText : MonoBehaviour
 {
+    //経過時間でテキストを点滅させる
     private Text text;
     float time;
     public float speed = 1.0f;

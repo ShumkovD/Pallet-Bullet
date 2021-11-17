@@ -8,20 +8,34 @@ public class ResultDirector : MonoBehaviour
 {
     UI_Time uiTime;
 
-
-
     //リザルト画面
     public GameObject Panel;
     public Text resultSrc;
     public Text totalResult;
 
-    //仮のスコア表示用
-    int enemyScore = 100;      //敵の持つポイント
-    int timeScore = 10;        //残り秒数が持つポイント
-    int criticalBonus = 50;    //色システムのボーナス点数
-    float timeCnt = 3.0f;      //ゲームオーバーになってからリザルト表示までの猶予時間
-    int totalScore;            //合計点数
-    float delta = 0f;
+    //スコア表示用
+    struct Score
+    {
+        public int enemy;       //敵の持つポイント
+        public int time;        //残り秒数が持つポイント
+        public int critical;    //色システムのボーナス点数
+        public int total;       //合計点数
+        public int timeCnt;     //ゲームオーバーになってからリザルト表示までの猶予時間
+        public int opTime;      //出力の間隔
+
+        public void SetValue(int v1, int v2, int v3, int v4, int v5, int v6)
+        {
+            enemy = v1;
+            time = v2;
+            critical = v3;
+            total = v4;
+            timeCnt = v5;
+            opTime = v6;
+        }
+    }
+
+    Score score = new Score();
+    bool isCalledOutput = false; //出力が呼ばれたかどうか
 
     [Header("Changed In Another Code")]
     public int eliminated = 0;      //敵を倒した数 - EnemyDeath.cs
@@ -37,93 +51,84 @@ public class ResultDirector : MonoBehaviour
         Panel.SetActive(false);
     }
 
+    void Start()
+    {
+        score.SetValue(100, 10, 50, 0, 3, 1);
+    }
     // Update is called once per frame
     void Update()
     {
         if (uiTime.gameOver)
-         Result();
+        {
+            if (!isCalledOutput)
+            {
+                StartCoroutine("ResultOutput");
+                isCalledOutput = true;
+            }
+        }
 
     }
 
-    //リザルト画面の表示
-    void Result()
+    void ScoreInitialize(Score s_)
     {
-        timeCnt -= Time.deltaTime;
-        Debug.Log(timeCnt);
-          if (timeCnt < 0)
-          {
-              timeCnt = 0;
-              delta += Time.deltaTime;
-              Panel.SetActive(true);
-              Output(); 
-        }
+        s_.enemy = 100;
+        s_.time = 10;
+        s_.critical = 50;
+        s_.total = 0;
+        s_.timeCnt = 3;
+        s_.opTime = 1;
+    }
+    //出力
+    IEnumerator ResultOutput()
+    {
+        yield return new WaitForSeconds(score.timeCnt);
+        Panel.SetActive(true);
+
+        yield return new WaitForSeconds(score.opTime);
+        resultSrc.text = Source(0, 0);
+
+        yield return new WaitForSeconds(score.opTime);
+        resultSrc.text += Source(0, 1);
+
+        yield return new WaitForSeconds(score.opTime);
+        resultSrc.text += Source(1, 0);
+
+        yield return new WaitForSeconds(score.opTime);
+        resultSrc.text += Source(1, 1);
+
+        yield return new WaitForSeconds(score.opTime);
+        resultSrc.text += Source(2, 0);
+
+        yield return new WaitForSeconds(score.opTime);
+        resultSrc.text += Source(2, 1);
+
+        yield return new WaitForSeconds(score.opTime);
+        totalResult.text += Source(3, 0);
+
+        yield return new WaitForSeconds(score.opTime);
+        totalResult.text += Source(3, 1);
     }
 
     //スコアの計算
     int ScoreCalc()
     {
-        int enemyTotal = eliminated * enemyScore;
-        int timeTotal = remainingTime * timeScore;
-        int bonusTotal = criticalShots * criticalBonus;
+        int enemyTotal = eliminated * score.enemy;
+        int timeTotal = remainingTime * score.time;
+        int bonusTotal = criticalShots * score.critical;
 
-        totalScore = enemyTotal + timeTotal + bonusTotal;
+        score.total = enemyTotal + timeTotal + bonusTotal;
 
-        return totalScore;
-    }
-
-    //出力
-    void Output()
-    {
-        if (delta > 1)
-        {
-            resultSrc.text = Source(0, 0);
-        }
-        if (delta > 2)
-        {
-            resultSrc.text += Source(0, 1);
-        }
-
-        if (delta > 3)
-        {
-            resultSrc.text += Source(1, 0);
-        }
-
-        if (delta > 4)
-        {
-            resultSrc.text += Source(1, 1);
-        }
-
-        if (delta > 5)
-        {
-            resultSrc.text += Source(2, 0);
-        }
-
-        if (delta > 6)
-        {
-            resultSrc.text += Source(2, 1);
-        }
-
-        if (delta > 7)
-        {
-            totalResult.text = Source(3, 0);
-        }
-
-        if (delta > 8)
-        {
-            totalResult.text += Source(3, 1);
-        }
-        
-        Debug.Log(delta);
+        return score.total;
     }
 
     //リザルトの内訳
-    string Source(int v1,int v2)
+    string Source(int v1, int v2)
     {
         string[,] src = new string[,]
         {
-            {"倒した敵" + "     ", eliminated.ToString() + " × " + enemyScore.ToString() + "点" + "\n\n"},
-            {"残り時間" + "     ", remainingTime.ToString() + " × " + timeScore.ToString() + "点" + "\n\n"},
-            {"ボーナス" + "       ", criticalShots.ToString() + " × " + criticalBonus.ToString() + "点"},
+            {"倒した敵" + "     ", eliminated.ToString() + " × " + score.enemy.ToString() + "点" + "\n\n"},
+            {"残り時間" + "     ", remainingTime.ToString() + " × " + score.time.ToString() + "点" + "\n\n"},
+            {"ボーナス" + "       ", criticalShots.ToString() + " × " + score.critical.ToString() + "点"},
             {"合計" + "     ", ScoreCalc().ToString() + "点"}
         };
 
