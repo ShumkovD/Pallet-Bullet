@@ -21,6 +21,8 @@ public class PlayerJumping : MonoBehaviour
     [SerializeField] CharacterController playerController;
     //入力
     Gamepad gamepad;
+
+    UI_Time uI_Time;
     /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
@@ -30,12 +32,20 @@ public class PlayerJumping : MonoBehaviour
     bool isGrounded;
     Vector3 gravity;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        uI_Time = GameObject.Find("GameManager").GetComponent<UI_Time>();
+    }
+
     void Update()
     {
         //接続されているゲームパッドを貰います
         if (Gamepad.current != null)
             gamepad = Gamepad.current;
+
+        if (uI_Time.gameOver)
+            return;
+
         //地面の確認
         isGrounded = Physics.CheckSphere(transform.position, playerThickness, groundMask);
         //ジャンプ入力

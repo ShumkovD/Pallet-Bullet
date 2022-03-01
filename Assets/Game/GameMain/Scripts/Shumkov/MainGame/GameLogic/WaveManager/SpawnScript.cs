@@ -39,7 +39,6 @@ public class SpawnScript : MonoBehaviour
     public Text waveText;
     UI_Time uI_Time;
     
-    // Update is called once per frame
     private void Start()
     {
         uI_Time = GameObject.Find("GameManager").GetComponent<UI_Time>();
