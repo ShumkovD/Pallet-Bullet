@@ -94,9 +94,6 @@ AnimatorStateMachine:
     m_State: {fileID: -7571524304884931981}
     m_Position: {x: 690, y: 410, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -4552835756297486615}
-    m_Position: {x: 725, y: 475, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 3012086461480941242}
     m_Position: {x: 350, y: 210, z: 0}
   m_ChildStateMachines: []
@@ -134,32 +131,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-4552835756297486615
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Instantiated
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: cbbc58d7de0b7d144b5ebd4a0e590492, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!114 &-4498816631868774070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -194,7 +165,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 2667949614841947897, guid: b99f1f8ff78689c4e8c2b8e15d2841ac, type: 3}
+  m_Motion: {fileID: 7400000, guid: 92bfe0fd65c359b4686a61bdf05a4b70, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -274,7 +245,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2613544721827560436, guid: a258dad48e0ddf343942af1c73d18f66, type: 3}
+  m_Motion: {fileID: 7400000, guid: e1d9b5ab23da684419fb4897025b9c72, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -352,7 +323,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Instantiated 0
+  m_Name: Instantiated
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

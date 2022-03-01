@@ -5,59 +5,79 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //変数
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     [Header("Moving Properties")]
     public float        speed;
     public float        dashX;
-    //地上の確認用
-    CharacterController playerController;
+    //プレイヤーのコンポーネント
+    [SerializeField] CharacterController playerController;
+    [SerializeField] GameObject walkingSound;
+    //その他
     UI_Time uiTime;
-    public GameObject walkingSound;
     Gamepad gamepad;
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
-    // Start is called before the first frame update
+    //コンポネントの初期化
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     private void Start()
     { 
         uiTime = GameObject.Find("GameManager").GetComponent<UI_Time>();
-        playerController = GetComponent<CharacterController>();
     }
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
-    
+    //入力
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     float inputHorizontal, inputVertical;
-    // Update is called once per frame
+
     private void Update()
     {
+        //接続されているゲームパッドを貰います
         if(Gamepad.current!=null)
             gamepad = Gamepad.current;
-        
-        if (!uiTime.gameOver)
-        {
 
-            inputVertical = gamepad.leftStick.y.ReadValue();
-            inputHorizontal = gamepad.leftStick.x.ReadValue();
-        }
-        else
+        //ゲームオーバーの場合、入力をしない
+        if (uiTime.gameOver)
         {
             inputVertical = 0f;
             inputHorizontal = 0f;
+            return;
         }
+        //入力
+        inputVertical = gamepad.leftStick.y.ReadValue();
+        inputHorizontal = gamepad.leftStick.x.ReadValue();
     }
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
-
+    //移動
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     private void FixedUpdate()
     {
+        //移動のベクトル
         Vector3 direction = new Vector3(inputVertical, 0f, inputHorizontal).normalized;
-        //このベクトルの長さ＞＝0.１
+        //このベクトルはゼロに近い値でなければ
         if (direction.magnitude >= 0.1)
         {
+            //音響効果を有効
             walkingSound.SetActive(true);
+            //アニメーションを設定
             GetComponent<Animator>().SetBool("runFlag", true);
+            //移動の方向を計算する
             Vector3 move = transform.right * inputHorizontal + transform.forward * inputVertical;
+            //移動させる
             playerController.Move(move * speed * Time.deltaTime);
+            //プログラム終了
+            return;
         }
-        else
-        {
-            walkingSound.SetActive(false);
-            GetComponent<Animator>().SetBool("runFlag", false);
-        }
+
+        //音響効果を有効
+        walkingSound.SetActive(false);
+        //アニメーションを設定
+        GetComponent<Animator>().SetBool("runFlag", false); 
     }
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 }

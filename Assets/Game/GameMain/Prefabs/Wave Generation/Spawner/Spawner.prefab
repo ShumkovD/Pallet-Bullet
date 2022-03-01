@@ -47,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - {fileID: 4207261810630215986, guid: 582b3b094e5fa6e40aad86c80e90ff71, type: 3}
-  - {fileID: 6008583564963696782, guid: 55190209f9250954fb0aae94bb3f26a0, type: 3}
-  - {fileID: 5015169307970904634, guid: bfa7d33e034c89e46bcaf1b30bbd27ad, type: 3}
+  - {fileID: 5349366794663817418, guid: 55190209f9250954fb0aae94bb3f26a0, type: 3}
+  - {fileID: 573024438540435212, guid: bfa7d33e034c89e46bcaf1b30bbd27ad, type: 3}
   - {fileID: 6833021184246148743, guid: 4c9ee48db9874c04e8c67ece2d9ff295, type: 3}
 --- !u!95 &8118338844126059792
 Animator:

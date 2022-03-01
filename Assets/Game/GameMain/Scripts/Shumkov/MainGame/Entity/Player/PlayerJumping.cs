@@ -5,53 +5,67 @@ using UnityEngine.InputSystem;
 
 public class PlayerJumping : MonoBehaviour
 {
+    //変数
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     [Header("Gravity Properties")]
-    public LayerMask groundMask;
-    public float gravitationEffect;
+    [SerializeField] LayerMask groundMask;
+    [SerializeField] float gravitationEffect;
 
     //キャラプロパティ
     [Header("Character Properties")]
-    public float playerThickness;
+    [SerializeField] float playerThickness;
 
-    //歩く音
-    public GameObject walkingSound;
-    //コンポーネント関係
-    CharacterController playerController;
+    //音響効果
+    [SerializeField] GameObject walkingSound;
+    //プレイヤーのコンポネント
+    [SerializeField] CharacterController playerController;
+    //入力
     Gamepad gamepad;
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
-    public bool isJumping;
-    public bool isGrounded;
+    //入力
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    bool isJumping;
+    bool isGrounded;
     Vector3 gravity;
-    void Start()
-    {
-        playerController = GetComponent<CharacterController>();
-    }
 
     // Update is called once per frame
     void Update()
     {
+        //接続されているゲームパッドを貰います
         if (Gamepad.current != null)
             gamepad = Gamepad.current;
         //地面の確認
         isGrounded = Physics.CheckSphere(transform.position, playerThickness, groundMask);
         //ジャンプ入力
-        isJumping = gamepad.aButton.wasPressedThisFrame|| gamepad.aButton.isPressed;
+        isJumping = gamepad.aButton.wasPressedThisFrame　|| gamepad.aButton.isPressed;
     }
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     
+    //ジャンプ
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     void FixedUpdate()
     {
-        //地面についているかどうか確認
+        //飛んでいない場合
         if (isGrounded&&isJumping)
         {
             gravity.y = Mathf.Sqrt(-0.5f * gravitationEffect * 3f) * Time.deltaTime;
         }
- 
+        
+        //飛んでいる場合
         if (!isGrounded)
         {
+            //歩く音響効果を無効
             walkingSound.SetActive(false);
             //重力の計算
             gravity.y += gravitationEffect * Time.deltaTime * Time.deltaTime;
         }
+
+        //移動
         playerController.Move(gravity);
     }
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 }

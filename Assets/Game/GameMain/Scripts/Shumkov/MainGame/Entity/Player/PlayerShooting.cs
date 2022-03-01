@@ -5,82 +5,100 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 public class PlayerShooting : MonoBehaviour
 {
+    //変数
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     //弾の種類
-    public GameObject[] bullet;
-    public GameObject superBullet;
+    [Header("Bullet Type")]
+    [SerializeField] GameObject[] bullet;
+    [SerializeField] GameObject superBullet;
     //弾が発生している場所
-    public GameObject barrel;
+    [Header("Gun Position")]
+    [SerializeField] GameObject barrel;
     //弾のプロパティ
+    [Header("Bullet Properties")]
     public float attackDamage;
-    public float attackSpeed;
-    public Vector3 speed;
-
-    public float powerUpTimer;
+    [SerializeField] float attackSpeed;
+    [SerializeField] Vector3 speed;
+    //パワーアップのタイマー
+    [Header("PowerUp duration")]
+    [SerializeField] float powerUpTimer;
     float time;
- 
     //フラッグ
-    public bool poweredUp;
+    public bool poweredUp = false;
     bool allowFire = true;
-
-    //敵を殺すボーナス
-    public float bonusSetting;
-
-
-    
+    //敵を倒すボーナス
+    [SerializeField] float bonusSetting;
     //撃っている弾の情報
     int index = 0;
     public GameObject shootingBullet;
-    //ゲームパッド
+    //音響効果
+    [SerializeField] AudioSource audioShooting;
+    //入力
     Gamepad gamepad;
-
-    //外部依存関係
+    //その他
     UI_Time timeManager;
-    public AudioSource audioShooting;
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+
+    //初期化
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     void Start()
     {
         timeManager = GameObject.Find("GameManager").GetComponent<UI_Time>();
-        audioShooting = GetComponent<AudioSource>();
         shootingBullet = bullet[0];
     }
-    // Update is called once per frame
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+
+    //入力
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     void Update()
     {
+        //入力
         if (Gamepad.current != null)
             gamepad = Gamepad.current;
 
-        if (!timeManager.gameOver)
+        //ゲームオーバー
+        if (timeManager.gameOver)
         {
-            //弾の切り替え
-            if (gamepad.rightTrigger.wasPressedThisFrame)
-            {
-                OnButtonDown_rightChange();
-            }
-            if (gamepad.leftTrigger.wasPressedThisFrame)
-            {
-                OnBUttonDown_leftChange();
-            }
+            StopAllCoroutines();
+            return;
+        }
 
-            //撃つ
-            bool canShoot = gamepad.rightShoulder.wasPressedThisFrame;
-            Shooting(canShoot);
+        //弾の切り替え（右）
+        if (gamepad.rightTrigger.wasPressedThisFrame)
+        {
+            OnButtonDown_rightChange();
+        }
 
-            //パワーアップの管理
-            if (poweredUp)
+        //弾の切り替え（左）
+        if (gamepad.leftTrigger.wasPressedThisFrame)
+        {
+            OnBUttonDown_leftChange();
+        }
+
+        //撃つ
+        bool canShoot = gamepad.rightShoulder.wasPressedThisFrame;
+        Shooting(canShoot);
+
+        //パワーアップの管理
+        if (poweredUp)
+        {
+            shootingBullet = superBullet;
+            time += Time.deltaTime;
+            if (time >= powerUpTimer)
             {
-                shootingBullet = superBullet;
-                time += Time.deltaTime;
-                if (time >= powerUpTimer)
-                {
-                    shootingBullet = bullet[0];
-                    poweredUp = false;
-                    time = 0;
-                    attackDamage *= 0.5f;
-                }
+                shootingBullet = bullet[0];
+                poweredUp = false;
+                time = 0;
+                attackDamage *= 0.5f;
             }
         }
-        else StopAllCoroutines();
-    }
 
+    }
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    
     //撃つ
     public void Shooting(bool canShoot)
     {
@@ -101,21 +119,24 @@ public class PlayerShooting : MonoBehaviour
         //目的についたか確認のため
         GameObject target = null;
         Vector3 targetPoint;
-        
+        //レイを指して
         if (Physics.Raycast(ray, out hit))
         {
+            //当たったオブジェクトを確認する
             targetPoint = hit.point;
+            //敵の場合、補助あり
             if (hit.transform.gameObject.tag == "Enemy")
             {
                 targetPoint = hit.point;
                 target = hit.transform.gameObject;
             }
-            else
-                if (hit.transform.gameObject.tag == "Terrain")
+            //マップだったら、補助なし
+            else　if (hit.transform.gameObject.tag == "Terrain")
             {
                 targetPoint = hit.point;
-            } 
-        else target = null;
+            }
+            //ターゲットがない
+            else target = null;
         }
         else
             targetPoint = ray.GetPoint(1000);
@@ -134,7 +155,8 @@ public class PlayerShooting : MonoBehaviour
         yield return new WaitForSeconds(attackSpeed);
         allowFire = true;
     }
-
+    //弾の切り替え
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
     public void OnBUttonDown_leftChange()
     {
         index--;
@@ -148,4 +170,8 @@ public class PlayerShooting : MonoBehaviour
         index %= bullet.Length;
         shootingBullet = bullet[index];
     }
+
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+
 }

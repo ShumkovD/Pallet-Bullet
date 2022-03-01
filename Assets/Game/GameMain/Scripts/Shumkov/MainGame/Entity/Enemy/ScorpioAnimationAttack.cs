@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScorpioAnimationAttack : MonoBehaviour
 {
+    //攻撃プロパティ
+
     [Header("Attack Property")]
     public float attackDamage;
     [Header("Bullet Instantiation")]
@@ -11,7 +13,9 @@ public class ScorpioAnimationAttack : MonoBehaviour
     public Transform enemyGun;
 
     GameObject bulletObj;
+    //コンポネント
     Animator animator;
+    //外部
     EnemyMovement movement;
     // Update is called once per frame
     private void Awake()
@@ -20,6 +24,7 @@ public class ScorpioAnimationAttack : MonoBehaviour
         movement = GetComponent<EnemyMovement>();
         enemyGun = gameObject.transform.Find("GunEnemy");
     }
+
     public IEnumerator Attack()
     {
           movement.isAttacking = true;
@@ -35,7 +40,7 @@ public class ScorpioAnimationAttack : MonoBehaviour
         bullet.GetComponent<AttackDamage>().damage = attackDamage;
         return bullet;
     }
-
+    //アニメーションを使って、攻撃します
     public void StopMovement()
     {
         animator.SetBool("isMoving", false);
